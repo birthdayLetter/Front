@@ -52,10 +52,19 @@
         justify-content: space-evenly;
 
         .signup-info-title {
-          width: 100%;
+          width: 98%;
           height: 27%;
+          //margin: 0 1%;
           font-size: 16px;
           font-family: "Inter Semi Bold", sans-serif;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+
+          .message {
+            font-size: 14px;
+          }
         }
 
         .info-input {
