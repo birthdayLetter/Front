@@ -1,6 +1,7 @@
 import '../scss/Header.scss';
-import { RxHamburgerMenu } from "react-icons/rx";
+import { RxHamburgerMenu, RxCross2 } from "react-icons/rx";
 import { slide as Menu } from 'react-burger-menu'
+import {Link} from "react-router-dom";
 
 const Header = () => {
 
@@ -12,29 +13,17 @@ const Header = () => {
             <div id="header">
                 <div className="header">
                     <div className="hbMenu-container">
-                        <Menu customBurgerIcon={<RxHamburgerMenu className="hbMenuBtn"/>}>
-                            <p id="home" className="menu-item" href="/">Home</p>
-                            <p id="about" className="menu-item" href="/about">About</p>
-                            <p id="contact" className="menu-item" href="/contact">Contact</p>
+                        <Menu customBurgerIcon={<RxHamburgerMenu />} customCrossIcon={ <RxCross2 /> }>
+                            <div className="menuBox">
+                                <Link to='/' id="home" className="menu-item">Home</Link>
+                                <p id="freind" className="menu-item">Freind</p>
+                                <Link to='/signin' id="signin" className="menu-item">Sign-in</Link>
+                                <Link to='/signup' id="signup" className="menu-item">Sign-up</Link>
+                            </div>
                         </Menu>
                     </div>
                 </div>
             </div>
-
-
-            {/*<div className="hbMenu-container">*/}
-            {/*    <Menu onStateChange={isMenuOpen}>*/}
-            {/*        <a id="home" className="menu-item" href="/">Home</a>*/}
-            {/*        <a id="about" className="menu-item" href="/about">About</a>*/}
-            {/*        <a id="contact" className="menu-item" href="/contact">Contact</a>*/}
-            {/*    </Menu>*/}
-            {/*    /!*<div className="hbMenu-box">*!/*/}
-            {/*    /!*    <p className="hbMenu-name">Home</p>*!/*/}
-            {/*    /!*    <p className="hbMenu-name">MyPage</p>*!/*/}
-            {/*    /!*    <p className="hbMenu-name">Friend</p>*!/*/}
-            {/*    /!*    <p className="hbMenu-name">Login</p>*!/*/}
-            {/*    /!*</div>*!/*/}
-            {/*</div>*/}
         </>
     )
 }

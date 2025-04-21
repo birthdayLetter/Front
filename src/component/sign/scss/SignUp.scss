@@ -16,14 +16,25 @@
     //justify-content: end;
 
     .profile-box {
-      width: 150px;
-      height: 150px;
+      width: 160px;
+      height: 160px;
       position: relative;
       top: 50px;
       z-index: 20;
       box-shadow: 0 5px 5px #666;
       background: #fff;
       border-radius: 50%;
+
+      .profile-img {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        z-index: 30;
+        cursor: pointer;
+      }
+    }
+    .profile-input {
+      display: none;
     }
     
     .info-container {
