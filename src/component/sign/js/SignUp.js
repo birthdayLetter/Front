@@ -250,8 +250,9 @@ const SignUp = () => {
         }
         // userValue의 각 필드를 FormData에 추가
         formData.append('name', userValue.name);
+        // formData.append('id', userValue.email);
         formData.append('id', '1234567');
-        // formData.append('role', 'admin');
+        formData.append('role', 'admin');
         formData.append('password', userValue.password);
         formData.append('birthDay', userValue.birthDay);
 

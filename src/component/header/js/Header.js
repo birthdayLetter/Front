@@ -17,6 +17,8 @@ const Header = () => {
                             <div className="menuBox">
                                 <Link to='/' id="home" className="menu-item">Home</Link>
                                 <p id="freind" className="menu-item">Freind</p>
+                                <p id="freind" className="menu-item">Send-Letter</p>
+                                <p id="mypage" className="menu-item">MyPage</p>
                                 <Link to='/signin' id="signin" className="menu-item">Sign-in</Link>
                                 <Link to='/signup' id="signup" className="menu-item">Sign-up</Link>
                             </div>

@@ -1,5 +1,6 @@
 import '../scss/Main.scss'
 import Header from "../../header/js/Header.js";
+import LetterList from "../../subPage/detailPage/js/LetterList.js";
 
 
 
@@ -8,7 +9,11 @@ const Main = () => {
         <>
             <Header/>
             <div className="main-container">
-
+                <div className="letter-container">
+                    <ul className="letter-row">
+                        <LetterList />
+                    </ul>
+                </div>
             </div>
         </>
     )
