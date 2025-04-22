@@ -241,18 +241,19 @@ const SignUp = () => {
         const file = imgRef.current.files?.[0];
 
         if (file) {
-            formData.append('imageFile', file); // 파일 객체를 직접 추가
+            formData.append('profileImg', file); // 파일 객체를 직접 추가
         } else {
             const response = await fetch(defaultImg);
             const blob = await response.blob();
             const defaultFile = new File([blob], 'profile_img.jpg', {type: blob.type});
-            formData.append('imageFile', defaultFile);
+            formData.append('profileImg', defaultFile);
         }
         // userValue의 각 필드를 FormData에 추가
         formData.append('name', userValue.name);
-        formData.append('id', userValue.email);
+        formData.append('id', '1234567');
+        // formData.append('role', 'admin');
         formData.append('password', userValue.password);
-        // formData.append('birthday', userValue.phoneNumber);
+        formData.append('birthDay', userValue.birthDay);
 
         try {
             const res = await fetch(SIGN_UP_URL, {
@@ -263,7 +264,7 @@ const SignUp = () => {
             if (res.ok) {
                 const json = await res.json();
                 console.log(json);
-                redirection('/sign_in'); // 성공 시 리다이렉트
+                redirection('/signin'); // 성공 시 리다이렉트
                 alert('회원가입이 완료되었습니다!');
             } else {
                 console.error('응답 상태 코드:', res.status);

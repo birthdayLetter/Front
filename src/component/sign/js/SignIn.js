@@ -35,14 +35,15 @@ const SignIn = () => {
         }
         if (res.status === 200) {
             const {token, nickname, profileImg} = await res.json();
+            console.log('로그인 성공~');
             // const responseData = await res.json();
             // 클라이언트에서 로그인을 했다는 사실을 알게 해야함
             // 서버에서 받은 토큰을 브라우저에 저장할것.
             // 1. 로컬 스토리지 - 데이터를 브라우저가 종료되어도 계속 보관
             // 2. 세션 스토리지 - 데이터를 브라우저가 종료되는 순간 삭제함
-            localStorage.setItem('GRANT_TYPE', token.grantType);
-            localStorage.setItem('ACCESS_TOKEN', token.accessToken);
-            localStorage.setItem('REFRESH_TOKEN', token.refreshToken);
+            // localStorage.setItem('GRANT_TYPE', token.grantType);
+            // localStorage.setItem('ACCESS_TOKEN', token.accessToken);
+            // localStorage.setItem('REFRESH_TOKEN', token.refreshToken);
             // localStorage.setItem('NICKNAME', nickname);
             // localStorage.setItem('PROFILE_IMG', profileImg);
 
@@ -72,7 +73,7 @@ const SignIn = () => {
                                 <p>PASSWORD</p>
                             </div>
                             <div className="info-input">
-                                <input id="password" className="signin-input-box" type="text"/>
+                                <input id="password" className="signin-input-box" type="password"/>
                             </div>
                         </div>
                     </div>
