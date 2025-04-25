@@ -15,14 +15,14 @@ const SignIn = () => {
     }
 
     const fetchSignInProcess = async () => {
+        const formData = new FormData();
+        formData.append('email', document.getElementById('email').value,);
+        formData.append('password', document.getElementById('password').value);
+
         const res = await fetch(SIGN_IN_URL, {
             method: 'POST',
-            headers: {'content-type': 'application/json'},
-            body: JSON.stringify({
-                id: document.getElementById('id').value,
-                password: document.getElementById('password').value
-            })
-        });
+            body: formData
+            });
 
         if (res.status === 400) { // 가입이 안되었거나 비번이 틀린 경우
             // 서버에서 온 텍스트를 추출
@@ -65,7 +65,7 @@ const SignIn = () => {
                                 <p>ID</p>
                             </div>
                             <div className="info-input">
-                                <input id="id" className="signin-input-box" type="text"/>
+                                <input id="email" className="signin-input-box" type="text"/>
                             </div>
                         </div>
                         <div className="pw-box signin-info-box">
