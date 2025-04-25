@@ -1,4 +1,5 @@
 import '../scss/SignIn.scss'
+import {useEffect} from "react";
 import {SiKakaotalk} from "react-icons/si";
 import {useNavigate} from "react-router-dom";
 import {REDIRECT_URI, REST_API_KEY, SIGN_KAKAO_URL, SIGN_URL} from "../../../config/host-config.js";
@@ -11,51 +12,26 @@ const SignIn = () => {
     const KAKAO_URL = SIGN_KAKAO_URL + "/sign-up"
     const redirection = useNavigate();
 
-    const kakaoLogin= async ()=>{
+    const kakaoLogin = async () => {
 
-        window.Kakao.Auth.authorize({
-            redirectUri: `${REDIRECT_URI}` // 리다이렉트 URI 입력
-        });
+        const res = await fetch(KAKAO_URL, {
+            method: 'GET',
+        })
 
-
-    }
-
-    const kakaoLoginToken= async (code)=>{
-        const res = await fetch(`https://kauth.kakao.com/oauth/token`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'},
-            body:  new URLSearchParams({
-                grant_type: 'authorization_code',
-                client_id: `${REST_API_KEY}`, // REST API 키
-                redirect_uri: 'http://localhost:3000/sign_in', // Redirect URI
-                code: code, // 카카오 인증 코드
-            }),
-        });
+        // const json = await res.json();
+        // console.log(json);
         if (res.ok) {
-            const data = await res.json();
-            const res2=await  fetch('http://localhost:8080/api/user/login/oauth2/code/kakao',{
-                method:'POST',
-                headers: {'Content-Type': 'application/json'},
-                body:JSON.stringify({
-                    accessToken: data.access_token,
-                    expiresIn:data.expires_in,
-                    tokenType:data.token_type,
-                    scope:data.scope,
-                    refreshToken:data.refresh_token
-                })
-            });
-
-            if (res2.status === 200) {
-                const {token, nickname, profileImg} = await res2.json();
-                localStorage.setItem('GRANT_TYPE', token.grantType);
-                localStorage.setItem('ACCESS_TOKEN', token.accessToken);
-                localStorage.setItem('REFRESH_TOKEN', token.refreshToken);
-                localStorage.setItem('NICKNAME', nickname);
-                localStorage.setItem('PROFILE_IMG', profileImg);
-            }
-            redirection('/');
+            const json = await res.json();
+            console.log(json);
+            redirection('/sign-in'); // 성공 시 리다이렉트
+            alert('카카오 로그인 성공!');
+        } else {
+            console.error('응답 상태 코드:', res.status);
+            alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
         }
     }
+
+
 
 
     const signinHandler = e => {
