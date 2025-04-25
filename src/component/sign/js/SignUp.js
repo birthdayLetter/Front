@@ -133,7 +133,7 @@ const SignUp = () => {
         // params.append('id', userValue.email)
         const json = await res.json();
         console.log(json);
-        if (!json) {
+        if (json.sucess=true) {
             msg = '사용 가능한 이메일입니다.';
             console.log(email);
             flag = true;
