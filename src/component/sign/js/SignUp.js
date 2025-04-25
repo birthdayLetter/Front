@@ -8,6 +8,7 @@ import Header from "../../header/js/Header.js";
 const SignUp = () => {
     // const API_BASE_URL = SIGN_URL;
     const SIGN_UP_URL = SIGN_URL + "/sign-up";
+    const CHECK_EMAIL_URL = SIGN_URL + "/check/email";
     const redirection = useNavigate();
 
 
@@ -26,6 +27,7 @@ const SignUp = () => {
     });
     // 입력값 검증 메시지를 관리할 상태변수
     const [message, setMessage] = useState({
+        name: '',
         password: '',
         passwordCheck: '',
         email: '',
@@ -34,6 +36,7 @@ const SignUp = () => {
 
     // 검증 완료 체크에 대한 상태변수 관리
     const [correct, setCorrect] = useState({
+        name:false,
         password: false,
         passwordCheck: false,
         email: false,
@@ -77,7 +80,17 @@ const SignUp = () => {
 
     const nameHandler = (e) => {
         const inputVal = e.target.value;
-        setUserValue({...userValue, name: inputVal});
+
+        let msg, flag;
+        if (!inputVal) {
+            msg = '이름은 필수값입니다!';
+            flag = false;
+        } else {
+            // 이름
+            msg = '형식에 맞는 이름입니다.';
+            flag = true;
+            saveInputState(flag, msg, inputVal, 'name');
+        }
     }
 
     // 이메일 입력값을 검증하고 관리할 함수
@@ -97,39 +110,42 @@ const SignUp = () => {
             flag = false;
         } else {
             // 이메일 중복체크
-            msg = '일단 통과';
+            // msg = '일단 통과';
             flag = true;
-            // fetchDuplicatedCheck(inputVal);
+            fetchDuplicatedCheck(inputVal);
         }
         saveInputState(flag, msg, inputVal, 'email');
     };
 
     // 이메일 중복체크
-    // const fetchDuplicatedCheck = async (email) => {
-    //
-    //     let msg = '', flag = false;
-    //
-    //     const res = await fetch(EMAIL_URL, {
-    //         method: 'POST',
-    //         headers: {'Content-Type': 'application/json'},
-    //         body: JSON.stringify({email})
-    //     })
-    //     const json = await res.json();
-    //     console.log(json);
-    //     if (!json) {
-    //         msg = '사용 가능한 이메일입니다.';
-    //         console.log(email);
-    //         flag = true;
-    //     } else {
-    //         msg = '이메일이 중복되었습니다!';
-    //         flag = false;
-    //     }
-    //     setUserValue({...userValue, email: email});
-    //     setMessage({...message, email: msg});
-    //     setCorrect({...correct, email: flag});
-    // };
-
     // 패스워드 입력값을 검증하고 관리할 함수
+
+    const fetchDuplicatedCheck = async (email) => {
+
+        let msg = '', flag = false;
+        // const params = new URLSearchParams();
+
+        const res = await fetch(CHECK_EMAIL_URL, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({email})
+        })
+        // params.append('id', userValue.email)
+        const json = await res.json();
+        console.log(json);
+        if (!json) {
+            msg = '사용 가능한 이메일입니다.';
+            console.log(email);
+            flag = true;
+        } else {
+            msg = '이메일이 중복되었습니다!';
+            flag = false;
+        }
+        saveInputState(flag, msg, email, 'email');
+        // setUserValue({...userValue, email: email});
+        // setMessage({...message, email: msg});
+        // setCorrect({...correct, email: flag});
+    };
     const passwordHandler = e => {
 
         // 패스워드를 입력하면 확인란을 비우기
@@ -250,9 +266,9 @@ const SignUp = () => {
         }
         // userValue의 각 필드를 FormData에 추가
         formData.append('name', userValue.name);
-        // formData.append('id', userValue.email);
-        formData.append('id', '1234567');
-        formData.append('role', 'admin');
+        formData.append('id', userValue.email);
+        // formData.append('id', '1234567');
+        // formData.append('role', 'admin');
         formData.append('password', userValue.password);
         formData.append('birthDay', userValue.birthDay);
 
@@ -299,9 +315,16 @@ const SignUp = () => {
                             <div className="name-box signup-info-box">
                                 <div className="signup-info-title">
                                     <p>NAME</p>
+                                    <span className={'message'} style={
+                                        correct.name
+                                            ? {color: '#61DBF0'}
+                                            : {color: '#F15F5F'}}>{message.name}</span>
                                 </div>
                                 <div className="info-input">
-                                    <input className="info-input-box" type="text" name="name" onChange={nameHandler}/>
+                                    <input className="info-input-box" type="text"
+                                           name="name"
+                                           onChange={nameHandler}
+                                           placeholder="홍길동"/>
                                 </div>
                             </div>
                             <div className="email-box signup-info-box">
