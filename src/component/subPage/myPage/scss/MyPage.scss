@@ -1,0 +1,62 @@
+.mypage-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .mypage-box {
+    width: 50%;
+    padding: 2.5%;
+    gap: 3%;
+    height: 45%;
+    border: 1px solid #BEC1CA;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    .myinfo-container {
+      width: 100%;
+      height: 80%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      .myprifile-img {
+        width: 150px;
+        height: 150px;
+        background: #ccc;
+        border-radius: 50%;
+      }
+      .myex-box {
+        width: 80%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .myinfo-box {
+          width: 100%;
+          height: 20%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1px solid #BEC1CA;
+
+
+        }
+      }
+    }
+    .modify-box {
+      width: 100px;
+      height: 32px;
+      border: 1px solid #817473;
+      border-radius: 5px;
+      background: #fff;
+
+
+    }
+  }
+}
