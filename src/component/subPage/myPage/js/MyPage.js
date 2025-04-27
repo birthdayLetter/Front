@@ -1,7 +1,17 @@
+import {useState} from "react";
 import Header from "../../../header/js/Header.js";
 import '../scss/MyPage.scss'
 
 const MyPage = () => {
+    const [userProfile, setUserProfile] = useState({
+        name: '',
+        email: '',
+        password: '',
+        phoneNumber: '',
+        adress: '',
+        imagePath: ''
+    });
+
     return(
         <>
             <Header/>
@@ -18,14 +28,19 @@ const MyPage = () => {
                                 <p>이름</p>
                                 <div className="myname">하이하이</div>
                             </div>
-                            <div className="myinfo-box mybirth-info">
-                                <p>생년월일</p>
-                                <div className="mybirth">s</div>
+                            <div className="myinfo-box myemail-info">
+                                <p>이메일</p>
+                                <div className="myemail">하이하이</div>
                             </div>
                             <div className="myinfo-box mypw-info">
                                 <p>비밀번호</p>
                                 <div className="mypw">********</div>
                             </div>
+                            <div className="myinfo-box mybirth-info">
+                                <p>생년월일</p>
+                                <div className="mybirth">s</div>
+                            </div>
+
                         </div>
                     </div>
                     <button className="modify-box">정보수정</button>
