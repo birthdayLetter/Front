@@ -1,7 +1,8 @@
 import '../scss/SignUp.scss'
 import React, { useState, useRef, useEffect } from 'react';
+import {SiKakaotalk} from "react-icons/si";
 import { useNavigate } from 'react-router-dom';
-import {SIGN_URL} from "../../../config/host-config.js";
+import {SIGN_KAKAO_URL, SIGN_URL} from "../../../config/host-config.js";
 import Header from "../../header/js/Header.js";
 
 
@@ -9,6 +10,7 @@ const SignUp = () => {
     // const API_BASE_URL = SIGN_URL;
     const SIGN_UP_URL = SIGN_URL + "/sign-up";
     const CHECK_EMAIL_URL = SIGN_URL + "/check/email";
+    const KAKAO_URL = SIGN_KAKAO_URL + "/sign-up"
     const redirection = useNavigate();
 
 
@@ -228,6 +230,7 @@ const SignUp = () => {
     }
 
 
+
     // 계정 생성 버튼을 누르면 동작할 내용
     const joinClickHandler = async (e) => {
         e.preventDefault();
@@ -291,7 +294,29 @@ const SignUp = () => {
             console.error('회원가입 요청 중 오류 발생:', error);
             alert('회원가입 중 문제가 발생했습니다.');
         }
+
     };
+
+
+    const kakaoClickHandler = async () => {
+
+        const res = await fetch(KAKAO_URL, {
+            method: 'GET',
+        })
+
+        const json = await res.json();
+        console.log(json);
+        if (res.ok) {
+            const json = await res.json();
+            console.log(json);
+            redirection('/sign-in'); // 성공 시 리다이렉트
+            alert('카카오 로그인 성공!');
+        } else {
+            console.error('응답 상태 코드:', res.status);
+            alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+        }
+    };
+
     return(
         <>
             <Header/>
@@ -312,80 +337,86 @@ const SignUp = () => {
                                onChange={imgUploadHandler}
                                ref={imgRef}/>
                         <div className="info-container">
-                            <div className="name-box signup-info-box">
-                                <div className="signup-info-title">
-                                    <p>NAME</p>
-                                    <span className={'message'} style={
-                                        correct.name
-                                            ? {color: '#61DBF0'}
-                                            : {color: '#F15F5F'}}>{message.name}</span>
+                            <div className="signup-info-boxes">
+                                <div className="name-box signup-info-box">
+                                    <div className="signup-info-title">
+                                        <p>NAME</p>
+                                        <span className={'message'} style={
+                                            correct.name
+                                                ? {color: '#61DBF0'}
+                                                : {color: '#F15F5F'}}>{message.name}</span>
+                                    </div>
+                                    <div className="info-input">
+                                        <input className="info-input-box" type="text"
+                                               name="name"
+                                               onChange={nameHandler}
+                                               placeholder="홍길동"/>
+                                    </div>
                                 </div>
-                                <div className="info-input">
-                                    <input className="info-input-box" type="text"
-                                           name="name"
-                                           onChange={nameHandler}
-                                           placeholder="홍길동"/>
+                                <div className="email-box signup-info-box">
+                                    <div className="signup-info-title">
+                                        <p>E-MAIL</p>
+                                        <span className={'message'} style={
+                                            correct.email
+                                                ? {color: '#61DBF0'}
+                                                : {color: '#F15F5F'}}>{message.email}</span>
+                                    </div>
+                                    <div className="info-input">
+                                        <input className="info-input-box" type="text" name="email"
+                                               onChange={emailHandler}
+                                               placeholder="ex)abcdef@gmail.com"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="email-box signup-info-box">
-                                <div className="signup-info-title">
-                                    <p>E-MAIL</p>
-                                    <span className={'message'} style={
-                                        correct.email
-                                            ? {color: '#61DBF0'}
-                                            : {color: '#F15F5F'}}>{message.email}</span>
+                                <div className="pw-box signup-info-box">
+                                    <div className="signup-info-title">
+                                        <p>PASSWORD</p>
+                                        <span className={'message'} style={
+                                            correct.password
+                                                ? {color: '#61DBF0'}
+                                                : {color: '#F15F5F'}}>{message.password}</span>
+                                    </div>
+                                    <div className="info-input">
+                                        <input className="info-input-box" type="password"
+                                               name="password"
+                                               id="password"
+                                               autoComplete="current-password"
+                                               onChange={passwordHandler}
+                                               placeholder="ex)abcdef!"/>
+                                    </div>
                                 </div>
-                                <div className="info-input">
-                                    <input className="info-input-box" type="text" name="email"
-                                           onChange={emailHandler}
-                                           placeholder="ex)abcdef@gmail.com"/>
+                                <div className="ck-pw-box signup-info-box">
+                                    <div className="signup-info-title">
+                                        <p>CHECK_PASSWORD</p>
+                                        <span id="check-text" className={'message'} style={
+                                            correct.passwordCheck
+                                                ? {color: '#61DBF0'}
+                                                : {color: '#F15F5F'}}>{message.passwordCheck}</span>
+                                    </div>
+                                    <div className="info-input">
+                                        <input className="info-input-box" type="password"
+                                               id="password-check"
+                                               autoComplete="check-password"
+                                               onChange={pwCheckHandler}
+                                               placeholder="check password"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="pw-box signup-info-box">
-                                <div className="signup-info-title">
-                                    <p>PASSWORD</p>
-                                    <span className={'message'} style={
-                                        correct.password
-                                            ? {color: '#61DBF0'}
-                                            : {color: '#F15F5F'}}>{message.password}</span>
-                                </div>
-                                <div className="info-input">
-                                    <input className="info-input-box" type="password"
-                                           name="password"
-                                           id="password"
-                                           autoComplete="current-password"
-                                           onChange={passwordHandler}
-                                           placeholder="ex)abcdef!"/>
-                                </div>
-                            </div>
-                            <div className="ck-pw-box signup-info-box">
-                                <div className="signup-info-title">
-                                    <p>CHECK_PASSWORD</p>
-                                    <span id="check-text" className={'message'} style={
-                                        correct.passwordCheck
-                                            ? {color: '#61DBF0'}
-                                            : {color: '#F15F5F'}}>{message.passwordCheck}</span>
-                                </div>
-                                <div className="info-input">
-                                    <input className="info-input-box" type="password"
-                                           id="password-check"
-                                           autoComplete="check-password"
-                                           onChange={pwCheckHandler}
-                                           placeholder="check password"/>
-                                </div>
-                            </div>
-                            <div className="bd-box signup-info-box">
-                                <div className="signup-info-title">
-                                    <p>BIRTHDAY</p>
-                                </div>
-                                <div className="info-input">
-                                    <input className="info-input-box" type="text"
-                                           onChange={birthdayHandler}
-                                           placeholder="ex)2025-01-01"/>
+                                <div className="bd-box signup-info-box">
+                                    <div className="signup-info-title">
+                                        <p>BIRTHDAY</p>
+                                    </div>
+                                    <div className="info-input">
+                                        <input className="info-input-box" type="text"
+                                               onChange={birthdayHandler}
+                                               placeholder="ex)2025-01-01"/>
+                                    </div>
                                 </div>
                             </div>
                             <div className="signup-btn" onClick={joinClickHandler}>
                                 <p className="signup-btn-style">회원가입</p>
+                            </div>
+                            <div className="signup-btn" >
+                                <img className="kakao-img" src="./assets/kakao_login_medium_wide.png"
+                                     alt="kakaologin" onClick={kakaoClickHandler}/>
                             </div>
                         </div>
                     </div>

@@ -9,7 +9,7 @@
 
   .signup-box {
     width: 500px;
-    height: 85%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,73 +39,91 @@
     
     .info-container {
       width: 80%;
-      height: 55%;
-      padding: 15% 10% 5% 10%;
+      height: 58%;
+      padding: 10% 10% 5% 10%;
       background: #D9CBC3;
       border-radius: 5px;
-
-      .signup-info-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      .signup-info-boxes{
         width: 100%;
-        height: 16%;
+        height: 78%;
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
+        justify-content: space-between;
+        align-items: center;
 
-        .signup-info-title {
-          width: 98%;
-          height: 27%;
-          //margin: 0 1%;
-          font-size: 16px;
-          font-family: "Inter Semi Bold", sans-serif;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-
-          .message {
-            font-size: 14px;
-          }
-        }
-
-        .info-input {
+        .signup-info-box {
           width: 100%;
-          height: 53%;
-          background: #fff;
-          border-radius: 5px;
+          height: 19%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
 
-          .info-input-box {
-            width: 96%;
-            height: 100%;
-            padding: 0 2%;
-            //outline-color: #817473;
-            border: hidden;
-            border-radius: 5px;
+          .signup-info-title {
+            width: 98%;
+            height: 27%;
+            //margin: 0 1%;
             font-size: 16px;
+            font-family: "Inter Semi Bold", sans-serif;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .message {
+              font-size: 14px;
+            }
           }
 
-          .info-input-box:focus {
-            width: 96%;
-            height: 100%;
-            padding: 0 2%;
-            outline: inset 2px #817473;
-            border: hidden;
+          .info-input {
+            width: 100%;
+            height: 50%;
+            background: #fff;
             border-radius: 5px;
-            font-size: 16px;
+
+            .info-input-box {
+              width: 96%;
+              height: 100%;
+              padding: 0 2%;
+              //outline-color: #817473;
+              border: hidden;
+              border-radius: 5px;
+              font-size: 16px;
+            }
+
+            .info-input-box:focus {
+              width: 96%;
+              height: 100%;
+              padding: 0 2%;
+              outline: inset 2px #817473;
+              border: hidden;
+              border-radius: 5px;
+              font-size: 16px;
+            }
           }
         }
       }
       .signup-btn {
         width: 100%;
-        height: 10%;
+        height: 8.5%;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 35px;
+        //margin-top: 35px;
         border-radius: 5px;
         background: #817473;
         .signup-btn-style {
           color: #fff;
           font-size: 18px;
+        }
+        .kakao-img{
+          width: 100%;
+          height: 100%;
+          border-radius: 5px;
+          object-fit: cover;
         }
       }
     }

@@ -12,15 +12,11 @@ const MyPage = () => {
                         <div className="myex-box">
                             <div className="myinfo-box myintro-info">
                                 <p>자기소개</p>
-                                <p>ㄴㄴㄴㄴㄴㄴ</p>
+                                <div className="myintro">하이하이</div>
                             </div>
                             <div className="myinfo-box myname-info">
                                 <p>이름</p>
-                                <div className="myname">s</div>
-                            </div>
-                            <div className="myinfo-box myid-info">
-                                <p>유저ID</p>
-                                <div className="myid">JSOEX42X</div>
+                                <div className="myname">하이하이</div>
                             </div>
                             <div className="myinfo-box mybirth-info">
                                 <p>생년월일</p>
