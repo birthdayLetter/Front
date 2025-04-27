@@ -39,8 +39,7 @@ const CheckPw = () => {
             if (res.ok) {
                 const json = await res.json();
                 console.log(json);
-                redirection('/sign-in'); // 성공 시 리다이렉트
-                alert('카카오 로그인 성공!');
+                redirection('/mypage'); // 성공 시 리다이렉트
             } else {
                 console.error('응답 상태 코드:', res.status);
                 alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
@@ -59,8 +58,7 @@ const CheckPw = () => {
             if (res.ok) {
                 const json = await res.json();
                 console.log(json);
-                redirection('/sign-in'); // 성공 시 리다이렉트
-                alert('카카오 로그인 성공!');
+                redirection('/mypage'); // 성공 시 리다이렉트
             } else {
                 console.error('응답 상태 코드:', res.status);
                 alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
