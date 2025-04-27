@@ -29,7 +29,7 @@ const CheckPw = () => {
                 method: 'POST',
                 headers: {
                     'X-AUTH-TOKEN':`${sessionToken}`, // 인증 헤더 추가
-                    // 'Content-Type': 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     password: document.getElementById('password').value
@@ -49,7 +49,7 @@ const CheckPw = () => {
                 method: 'POST',
                 headers: {
                     'X-AUTH-TOKEN':`${localToken}`, // 인증 헤더 추가
-                    // 'Content-Type': 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     password: document.getElementById('password').value
