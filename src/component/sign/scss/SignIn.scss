@@ -7,8 +7,9 @@
   align-items: center;
 
   .signin-box {
-    width: 450px;
-    height: 450px;
+    width: 430px;
+    height: 430px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -17,7 +18,7 @@
     border-radius: 5px;
 
     .signin-title {
-      font-size: 35px;
+      font-size: 38px;
     }
 
     .signin-info-container {
@@ -65,36 +66,43 @@
           }
         }
       }
-      .social-login {
-        width: 30%;
+      .login-check {
+        width: 75%;
         display: flex;
         flex-direction: row;
+        justify-content: start;
         align-items: center;
-        justify-content: center;
+      }
+    }
+    .social-login {
+      width: 30%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
 
-        .kakao-btn {
-          display: flex;
-          background: #353535;
-          border: none;
-          border-radius: 5px;
+      .kakao-btn {
+        display: flex;
+        background: #353535;
+        border: none;
+        border-radius: 5px;
+        width: 50px;
+        height: 50px;
+        box-shadow: 1px 1px 3px #ccc;
+        padding: 0;
+
+        .kakao {
           width: 50px;
           height: 50px;
-          box-shadow: 1px 1px 3px #ccc;
-          padding: 0;
-
-          .kakao {
-            width: 50px;
-            height: 50px;
-            overflow: auto;
-            color: #FFE400;
-          }
+          overflow: auto;
+          color: #FFE400;
         }
       }
     }
 
     .signin-btn {
       width: 75%;
-      height: 38px;
+      height: 40px;
       background: #817473;
       border-radius: 5px;
       display: flex;

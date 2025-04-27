@@ -8,8 +8,9 @@ const CheckPw = () => {
             <div className="checkpw-container">
                 <div className="checkpw-box">
                     <p>PASSWORD</p>
-                    <input type="password" />
+                    <input id="password" type="password" />
                 </div>
+                <button>확인</button>
             </div>
         </>
     )

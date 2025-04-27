@@ -44,6 +44,7 @@ const SignIn = () => {
         formData.append('email', document.getElementById('email').value,);
         formData.append('password', document.getElementById('password').value);
 
+
         const res = await fetch(SIGN_IN_URL, {
             method: 'POST',
             body: formData
@@ -59,7 +60,7 @@ const SignIn = () => {
             alert('서버 연결에 오류가 생겼습니다!');
         }
         if (res.status === 200) {
-            const {token, nickname, profileImg} = await res.json();
+            const {token} = await res.json();
             console.log('로그인 성공~');
             // const responseData = await res.json();
             // 클라이언트에서 로그인을 했다는 사실을 알게 해야함
@@ -67,10 +68,12 @@ const SignIn = () => {
             // 1. 로컬 스토리지 - 데이터를 브라우저가 종료되어도 계속 보관
             // 2. 세션 스토리지 - 데이터를 브라우저가 종료되는 순간 삭제함
             // localStorage.setItem('GRANT_TYPE', token.grantType);
-            // localStorage.setItem('ACCESS_TOKEN', token.accessToken);
-            // localStorage.setItem('REFRESH_TOKEN', token.refreshToken);
-            // localStorage.setItem('NICKNAME', nickname);
-            // localStorage.setItem('PROFILE_IMG', profileImg);
+            const check = document.getElementById("checkbox").checked
+            if (check === true) {
+                localStorage.setItem('ACCESS_TOKEN', token);
+            } else {
+                sessionStorage.setItem('ACCESS_TOKEN', token);
+            }
 
             redirection('/');
         }
@@ -101,12 +104,17 @@ const SignIn = () => {
                                 <input id="password" className="signin-input-box" type="password"/>
                             </div>
                         </div>
-                        <div className="social-login">
-                            <button className="kakao-btn" onClick={() => kakaoLogin()}>
-                                <SiKakaotalk className="kakao"/>
-                            </button>
-
+                        <div className="login-check">
+                            <input type="checkbox"
+                                   id="checkbox"/>
+                            <p>로그인정보저장</p>
                         </div>
+                    </div>
+                    <div className="social-login">
+                        <button className="kakao-btn" onClick={() => kakaoLogin()}>
+                            <SiKakaotalk className="kakao"/>
+                        </button>
+
                     </div>
                     <div className="signin-btn" onClick={signinHandler}>
                         <p className="signin-btn-style">로그인</p>
