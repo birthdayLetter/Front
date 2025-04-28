@@ -314,6 +314,7 @@ const SignUp = () => {
         if (res.ok) {
             console.log(json);
             window.location.href = json.redirectUri;
+            sessionStorage.setItem('ACCESS_TOKEN', json.token);
             alert('카카오 로그인 성공!');
         } else {
             console.error('응답 상태 코드:', res.status);
