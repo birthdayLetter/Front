@@ -302,14 +302,18 @@ const SignUp = () => {
 
         const res = await fetch(KAKAO_URL, {
             method: 'GET',
+            eaders: {
+                // 'Authorization':`Bearer ${storedToken}`, // 인증 헤더 추가
+                'Content-Type': 'application/json',
+            },
         })
 
         const json = await res.json();
         console.log(json);
+
         if (res.ok) {
-            const json = await res.json();
             console.log(json);
-            redirection('/sign-in'); // 성공 시 리다이렉트
+            window.location.href = json.redirectUri;
             alert('카카오 로그인 성공!');
         } else {
             console.error('응답 상태 코드:', res.status);
