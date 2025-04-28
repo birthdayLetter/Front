@@ -1,13 +1,32 @@
 import '../scss/Header.scss';
+import {useEffect, useState} from "react";
 import { RxHamburgerMenu, RxCross2 } from "react-icons/rx";
 import { slide as Menu } from 'react-burger-menu'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const Header = () => {
+    const localToken = localStorage.getItem('ACCESS_TOKEN');
+    const sessionToken = sessionStorage.getItem('ACCESS_TOKEN');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const redirection = useNavigate();
 
-    function isMenuOpen(e) {
+    useEffect(() => {
 
-    }
+        if (localToken === null && sessionToken === null) {
+            setIsLoggedIn(true);
+        }
+
+    }, []);
+
+    const handleLogout = () => {
+        // localStorage를 비웁니다.
+        localStorage.clear();
+        sessionStorage.clear();
+
+        // 로그아웃 후 리다이렉션 (예: 로그인 페이지)
+        redirection('/signin');
+    };
+
     return(
         <>
             <div id="header">
@@ -18,9 +37,20 @@ const Header = () => {
                                 <Link to='/' id="home" className="menu-item">Home</Link>
                                 <p id="freind" className="menu-item">Freind</p>
                                 <p id="freind" className="menu-item">Send-Letter</p>
-                                <Link to='/checkpw' id="signin" className="menu-item">MyPage</Link>
-                                <Link to='/signin' id="signin" className="menu-item">Sign-in</Link>
-                                <Link to='/signup' id="signup" className="menu-item">Sign-up</Link>
+                                {isLoggedIn ? (
+                                    <>
+                                        <Link to='/signin' id="signin" className="menu-item">Sign-in</Link>
+                                        <Link to='/signup' id="signup" className="menu-item">Sign-up</Link>
+                                    </>
+                                        ) : (
+                                            <>
+                                        <Link to='/checkpw' id="signin" className="menu-item">MyPage</Link>
+                                        <div onClick={handleLogout} className="menu-item">
+                                            <span>로그아웃</span>
+                                        </div>
+                                            </>
+                                    )
+                                }
                             </div>
                         </Menu>
                     </div>
