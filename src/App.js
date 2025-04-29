@@ -7,6 +7,7 @@ import SignIn from "./component/sign/js/SignIn.js";
 import SignUp from "./component/sign/js/SignUp.js";
 import CheckPw from "./component/subPage/myPage/js/CheckPw.js";
 import MyPage from "./component/subPage/myPage/js/MyPage.js";
+import OauthCallback from "./component/sign/js/OauthCallback";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/signup" element={<SignUp/>}/>
                 <Route path="/checkpw" element={<CheckPw/>}/>
                 <Route path="/mypage" element={<MyPage/>}/>
+                <Route path="/oauth/callback" element={<OauthCallback/>}/>
             </Routes>
       </BrowserRouter>
   );
