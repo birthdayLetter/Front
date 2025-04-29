@@ -40,23 +40,38 @@
         .myinfo-box {
           width: 96%;
           height: 20%;
-          margin: 0 2%;
+          margin: 0 2p%;
           display: flex;
           justify-content: space-between;
           align-items: center;
           border-bottom: 1px solid #BEC1CA;
 
+          .modify-input {
+            width: 50%;
+            height: 35%;
+            font-size: 14px;
+
+          }
+
         }
       }
     }
     .modify-box {
+      width: 30%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+
+
+    }
+    .modifybtn {
       width: 100px;
       height: 32px;
       border: 1px solid #817473;
       border-radius: 5px;
       background: #fff;
-
-
     }
   }
 }
