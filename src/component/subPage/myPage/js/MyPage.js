@@ -1,8 +1,12 @@
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
+import {USER_URL} from "../../../../config/host-config.js";
 import Header from "../../../header/js/Header.js";
 import '../scss/MyPage.scss'
 
 const MyPage = () => {
+    const localToken = localStorage.getItem('ACCESS_TOKEN');
+    const sessionToken = sessionStorage.getItem('ACCESS_TOKEN');
+    const didAlert = useRef(false);
     const [userProfile, setUserProfile] = useState({
         name: '',
         email: '',
@@ -11,6 +15,65 @@ const MyPage = () => {
         adress: '',
         imagePath: ''
     });
+
+    useEffect(() => {
+        if (didAlert.current) return; // 이미 알럿했으면 무시
+        didAlert.current = true;       // 알럿했다 표시
+        fetchUserInfo();
+
+    }, []);
+
+    const fetchUserInfo = async () => {
+
+        if (localToken === null) {
+            const res = await fetch(USER_URL + '/', {
+                method: 'GET',
+                headers: {
+                    'X-AUTH-TOKEN':`${sessionToken}`, // 인증 헤더 추가
+                    'Content-Type': 'application/json',
+                },
+            })
+            const json = await res.json();
+            console.log(json);
+            if (res.ok) {
+                setUserProfile({
+                    ...userProfile,
+                    name: json.name,
+                    email: json.email,
+                    password: json.password,
+                    birthDay: json.birthDay,
+                    imagePath: json.profileUrl,
+                });
+            } else {
+                console.error('응답 상태 코드:', res.status);
+                alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+            }
+
+        }else if (sessionToken === null) {
+            const res = await fetch(USER_URL + '/', {
+                method: 'GET',
+                headers: {
+                    'X-AUTH-TOKEN':`${localToken}`, // 인증 헤더 추가
+                    'Content-Type': 'application/json',
+                },
+            })
+            const json = await res.json();
+            console.log(json);
+            if (res.ok) {
+                setUserProfile({
+                    ...userProfile,
+                    name: json.name,
+                    email: json.email,
+                    password: json.password,
+                    birthDay: json.birthDay,
+                    imagePath: json.profileUrl,
+                });
+            } else {
+                console.error('응답 상태 코드:', res.status);
+                alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+            }
+        }
+    }
 
     return(
         <>

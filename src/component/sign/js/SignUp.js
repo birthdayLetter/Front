@@ -302,14 +302,14 @@ const SignUp = () => {
 
         const res = await fetch(KAKAO_URL, {
             method: 'GET',
-            eaders: {
+            headers: {
                 // 'Authorization':`Bearer ${storedToken}`, // 인증 헤더 추가
                 'Content-Type': 'application/json',
             },
         })
 
         const json = await res.json();
-        console.log(json);
+        // console.log(json);
 
         if (res.ok) {
             console.log(json);
