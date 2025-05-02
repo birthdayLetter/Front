@@ -16,7 +16,7 @@ const MyPage = () => {
         email: '',
         password: '',
         birthDay:'',
-        imagePath: '',
+        profileImg: '',
         description: ''
     });
 
@@ -54,8 +54,9 @@ const MyPage = () => {
                     name: json.name,
                     userid: json.userId,
                     email: json.email,
+                    password: json.password,
                     birthDay: json.birthDay,
-                    imagePath: json.profileUrl,
+                    profileImg: json.profileImg,
                     description: '아직 소개글을 작성하지 않았습니다.'
                 });
 
@@ -65,8 +66,9 @@ const MyPage = () => {
                     name: json.name,
                     userid: json.userId,
                     email: json.email,
+                    password: json.password,
                     birthDay: json.birthDay,
-                    imagePath: json.profileUrl,
+                    profileImg: json.profileImg,
                     description: json.description
                 });
             }
@@ -91,7 +93,7 @@ const MyPage = () => {
         const reader = new FileReader();
         reader.onload = () => {
             const imageDataUrl = reader.result;
-            setUserProfile({...userProfile, imagePath: imageDataUrl}); // 미리보기용으로만 사용
+            setUserProfile({...userProfile, profileImg: imageDataUrl}); // 미리보기용으로만 사용
 
             // 파일 객체는 userValue에 저장하지 않음, 나중에 FormData에 직접 추가
         };
@@ -137,7 +139,6 @@ const MyPage = () => {
     const modifyHandler = async () => {
         const tokenToUse = sessionToken || localToken;
         const formData = new FormData();
-
         const file = imgRef.current.files?.[0];
         formData.append('profileImg', file);
         // userValue의 각 필드를 FormData에 추가
@@ -180,12 +181,12 @@ const MyPage = () => {
                     <div className="myinfo-container">
                         {modifyBtn ? (
                             <div className="myprifile-img">
-                                <img src={userProfile.imagePath} alt=""/>
+                                <img src={userProfile.profileImg} alt=""/>
                             </div>
                         ) : (
                             <>
                             <div className="myprifile-img" onClick={() => imgRef.current.click()}>
-                                <img src={userProfile.imagePath} className="mypage-img" alt=""/>
+                                <img src={userProfile.profileImg} className="mypage-img" alt=""/>
                             </div>
                             <input type="file" className="img-input" accept="image/*"
                             name="imagePath"
