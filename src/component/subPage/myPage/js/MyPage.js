@@ -24,99 +24,56 @@ const MyPage = () => {
     useEffect(() => {
         if (didAlert.current) return; // 이미 알럿했으면 무시
         didAlert.current = true;       // 알럿했다 표시
+
         fetchUserInfo();
 
     }, []);
 
     const fetchUserInfo = async () => {
+        const tokenToUse = sessionToken || localToken;
 
-        if (localToken === null) {
-            const res = await fetch(USER_URL + '/', {
-                method: 'GET',
-                headers: {
-                    'X-AUTH-TOKEN':`${sessionToken}`, // 인증 헤더 추가
-                    'Content-Type': 'application/json',
-                },
-            })
-            const json = await res.json();
-            console.log(json);
+        const res = await fetch(USER_URL + '/', {
+            method: 'GET',
+            headers: {
+                'X-AUTH-TOKEN': tokenToUse, // 인증 헤더 추가
+                'Content-Type': 'application/json',
+            },
+        })
+        const json = await res.json();
+        console.log(json);
 
-            if (res.ok) {
-                const birthArr = json.birthDay; // [2022, 2, 3]
-                const formattedBirth = birthArr
-                    .map((num) => String(num).padStart(2, '0')) // '02', '03' 등 자릿수 맞춤
-                    .join('-'); // '2022-02-03'
-                if (json.description === null) {
-                    setUserProfile({
-                        ...userProfile,
-                        name: json.name,
-                        userid: json.userId,
-                        email: json.email,
-                        birthDay: formattedBirth,
-                        imagePath: json.profileUrl,
-                        description: '아직 소개글을 작성하지 않았습니다.'
-                    });
+        if (res.ok) {
+            // const birthArr = json.birthDay; // [2022, 2, 3]
+            // const formattedBirth = birthArr
+            //     .map((num) => String(num).padStart(2, '0')) // '02', '03' 등 자릿수 맞춤
+            //     .join('-'); // '2022-02-03'
+            if (json.description === null) {
+                setUserProfile({
+                    ...userProfile,
+                    name: json.name,
+                    userid: json.userId,
+                    email: json.email,
+                    birthDay: json.birthDay,
+                    imagePath: json.profileUrl,
+                    description: '아직 소개글을 작성하지 않았습니다.'
+                });
 
-                } else {
-                    setUserProfile({
-                        ...userProfile,
-                        name: json.name,
-                        userid: json.userId,
-                        email: json.email,
-                        birthDay: formattedBirth,
-                        imagePath: json.profileUrl,
-                        description: json.description
-                    });
-                }
             } else {
-                console.error('응답 상태 코드:', res.status);
-                alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+                setUserProfile({
+                    ...userProfile,
+                    name: json.name,
+                    userid: json.userId,
+                    email: json.email,
+                    birthDay: json.birthDay,
+                    imagePath: json.profileUrl,
+                    description: json.description
+                });
             }
-
-        }else if (sessionToken === null) {
-            const res = await fetch(USER_URL + '/', {
-                method: 'GET',
-                headers: {
-                    'X-AUTH-TOKEN':`${localToken}`, // 인증 헤더 추가
-                    'Content-Type': 'application/json',
-                },
-            })
-            const json = await res.json();
-            console.log(json);
-            if (res.ok){
-                const birthArr = json.birthDay; // [2022, 2, 3]
-                const formattedBirth = birthArr
-                    .map((num) => String(num).padStart(2, '0')) // '02', '03' 등 자릿수 맞춤
-                    .join('-'); // '2022-02-03'
-
-
-                if (json.description === null) {
-                    setUserProfile({
-                        ...userProfile,
-                        name: json.name,
-                        userid: json.userId,
-                        email: json.email,
-                        birthDay: formattedBirth,
-                        imagePath: json.profileUrl,
-                        description: '아직 소개글을 작성하지 않았습니다.'
-                    });
-
-                } else {
-                    setUserProfile({
-                        ...userProfile,
-                        name: json.name,
-                        userid: json.userId,
-                        email: json.email,
-                        birthDay: formattedBirth,
-                        imagePath: json.profileUrl,
-                        description: json.description
-                    });
-                }
-            } else {
-                console.error('응답 상태 코드:', res.status);
-                alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
-            }
+        } else {
+            console.error('응답 상태 코드:', res.status);
+            alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
         }
+
     }
 
     // 정보 수정을 눌렀을때
@@ -177,6 +134,7 @@ const MyPage = () => {
     }
 
     const modifyHandler = async () => {
+        const tokenToUse = sessionToken || localToken;
         const formData = new FormData();
 
         // const file = imgRef.current.files?.[0];
@@ -192,8 +150,8 @@ const MyPage = () => {
         const res = await fetch(USER_URL + '/edit',{
             method: 'PUT',
             headers: {
-                'X-AUTH-TOKEN':`${sessionToken}`, // 인증 헤더 추가
-                'Content-Type': 'application/json',
+                'X-AUTH-TOKEN':tokenToUse, // 인증 헤더 추가
+                // 'Content-Type': 'application/json',
             },
             body: formData
 
