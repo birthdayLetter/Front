@@ -138,13 +138,14 @@ const MyPage = () => {
         const tokenToUse = sessionToken || localToken;
         const formData = new FormData();
 
-        // const file = imgRef.current.files?.[0];
-        formData.append('profileUrl', userProfile.imagePath);
+        const file = imgRef.current.files?.[0];
+        formData.append('profileImg', file);
         // userValue의 각 필드를 FormData에 추가
         formData.append('name', userProfile.name);
         formData.append('email', userProfile.email);
         formData.append('userId', userProfile.userid);
         formData.append('password', userProfile.password);
+        formData.append('userId',userProfile.userid);
         // const cleanBirthDay = userProfile.birthDay.replaceAll('-', '');
         formData.append('birthDay', userProfile.birthDay);
         formData.append('description', userProfile.description);
@@ -159,6 +160,7 @@ const MyPage = () => {
 
         });
         if (res.ok) {
+            alert('수정완료!');
             const json = await res.json();
             console.log(json);
             redirection('/mypage'); // 성공 시 리다이렉트
