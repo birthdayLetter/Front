@@ -15,6 +15,7 @@ const MyPage = () => {
         userid: '',
         email: '',
         password: '',
+        birthDay:'',
         imagePath: '',
         description: ''
     });
@@ -142,6 +143,7 @@ const MyPage = () => {
         // userValue의 각 필드를 FormData에 추가
         formData.append('name', userProfile.name);
         formData.append('email', userProfile.email);
+        formData.append('userId', userProfile.userid);
         formData.append('password', userProfile.password);
         // const cleanBirthDay = userProfile.birthDay.replaceAll('-', '');
         formData.append('birthDay', userProfile.birthDay);
