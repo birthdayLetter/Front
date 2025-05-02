@@ -14,7 +14,7 @@ const MyPage = () => {
         name: '',
         userid: '',
         email: '',
-        password: '',
+        password: null,
         birthDay:'',
         profileImg: '',
         description: ''
@@ -54,7 +54,7 @@ const MyPage = () => {
                     name: json.name,
                     userid: json.userId,
                     email: json.email,
-                    password: json.password,
+                    // password: json.password,
                     birthDay: json.birthDay,
                     profileImg: json.profileImg,
                     description: '아직 소개글을 작성하지 않았습니다.'
@@ -66,7 +66,7 @@ const MyPage = () => {
                     name: json.name,
                     userid: json.userId,
                     email: json.email,
-                    password: json.password,
+                    // password: json.password,
                     birthDay: json.birthDay,
                     profileImg: json.profileImg,
                     description: json.description
@@ -158,13 +158,16 @@ const MyPage = () => {
         const file = imgRef.current.files?.[0];
         if (file) {
             formData.append('profileImg', file);
+            console.log(file);
         } else {
-            const response = await fetch(userProfile.profileImg);
-            const blob = await response.blob();
-            // const imgFile = userProfile.profileImg;
-            const filename = (userProfile.profileImg || '').split('/').pop();
-            const defaultFile = new File([blob], filename, {type: blob.type});
-            formData.append('profileImg', defaultFile);
+            // const response = await fetch(userProfile.profileImg);
+            // const blob = await response.blob();
+            // // const imgFile = userProfile.profileImg;
+            // const filename = (userProfile.profileImg || '').split('/').pop();
+            // console.log(filename);
+            // const defaultFile = new File([blob], filename, {type: blob.type});
+            const changeImg = null;
+            formData.append('profileImg', changeImg);
 
 
             // const changefile = await urlToFile(userProfile.profileImg,
