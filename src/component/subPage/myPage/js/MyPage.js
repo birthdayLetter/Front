@@ -134,13 +134,43 @@ const MyPage = () => {
         }
 
         setUserProfile({...userProfile, birthDay: inputVal});
-    }
+    };
+
+
+    // const getFileNameFromUrl = (url) => {
+    //     return url.split('/').pop()?.split('?')[0] || 'file.jpg'; // 쿼리 제거
+    // };
+    // const imageUrl = userProfile.profileImg;
+    // const urlToFile = async (imageUrl, mimeType = 'image/jpeg') => {
+    //     const response = await fetch(imageUrl);
+    //     if (!response.ok) throw new Error('이미지 요청 실패');
+    //
+    //     const blob = await response.blob();
+    //     const filename = getFileNameFromUrl(imageUrl);
+    //
+    //     return new File([blob], filename, { type: mimeType });
+    // };
 
     const modifyHandler = async () => {
         const tokenToUse = sessionToken || localToken;
         const formData = new FormData();
+
         const file = imgRef.current.files?.[0];
-        formData.append('profileImg', file);
+        if (file) {
+            formData.append('profileImg', file);
+        } else {
+            const response = await fetch(userProfile.profileImg);
+            const blob = await response.blob();
+            // const imgFile = userProfile.profileImg;
+            const filename = (userProfile.profileImg || '').split('/').pop();
+            const defaultFile = new File([blob], filename, {type: blob.type});
+            formData.append('profileImg', defaultFile);
+
+
+            // const changefile = await urlToFile(userProfile.profileImg,
+            //     '', 'image/jpeg');
+            // formData.append('profileImg', changefile)
+        }
         // userValue의 각 필드를 FormData에 추가
         formData.append('name', userProfile.name);
         formData.append('email', userProfile.email);
@@ -164,6 +194,7 @@ const MyPage = () => {
             alert('수정완료!');
             const json = await res.json();
             console.log(json);
+            setModifyBtn(true);
             redirection('/mypage'); // 성공 시 리다이렉트
         } else {
             console.error('응답 상태 코드:', res.status);
@@ -180,12 +211,12 @@ const MyPage = () => {
                 <div className="mypage-box">
                     <div className="myinfo-container">
                         {modifyBtn ? (
-                            <div className="myprifile-img">
-                                <img src={userProfile.profileImg} alt=""/>
+                            <div className="myprofile-img">
+                                <img src={userProfile.profileImg} className="mypage-img" alt=""/>
                             </div>
                         ) : (
                             <>
-                            <div className="myprifile-img" onClick={() => imgRef.current.click()}>
+                            <div className="myprofile-img" onClick={() => imgRef.current.click()}>
                                 <img src={userProfile.profileImg} className="mypage-img" alt=""/>
                             </div>
                             <input type="file" className="img-input" accept="image/*"
