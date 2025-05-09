@@ -1,0 +1,44 @@
+.friend-list-container {
+  width: 96%;
+  height: 12%;
+  padding: 2%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #000;
+  //background: #9f4949;
+
+  .fr-box {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+
+    .fr-profile {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #ccc;
+    }
+
+    .fr-info {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+
+      .fr-name {
+        font-size: 16px;
+      }
+
+      .fr-des {
+        font-size: 14px;
+      }
+    }
+  }
+  
+
+}
