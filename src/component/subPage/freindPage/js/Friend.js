@@ -9,10 +9,17 @@ import {BsPersonFillAdd, BsPersonFillCheck} from "react-icons/bs";
 const Friend = () => {
     const FRIEND_SEARCH_URL = FRIEND_URL + '/search';
     const FRIEND_LIST_URL = FRIEND_URL + '/list';
+    const FRIEND_CHECK_URL = FRIEND_URL + '/list/pending';
     const localToken = localStorage.getItem('ACCESS_TOKEN');
     const sessionToken = sessionStorage.getItem('ACCESS_TOKEN');
+    const didAlert = useRef(false);
     const [friendList, setFriendList] = useState([]);
+    const [friendCheckList, setFriendCheckList] = useState([]);
     const displayFriendList = friendList.slice(
+        // (page - 1) * itemsPerPage,
+        // page * itemsPerPage
+    );
+    const displayFrCheckList = friendCheckList.slice(
         // (page - 1) * itemsPerPage,
         // page * itemsPerPage
     );
@@ -22,6 +29,10 @@ const Friend = () => {
     const [frInput, setFrInput] = useState();
 
     useEffect(() => {
+        if (didAlert.current) return; // 이미 알럿했으면 무시
+        didAlert.current = true;       // 알럿했다 표시
+        // const tokenToUse = sessionToken || localToken;
+        // console.log(tokenToUse);
         fetchFriendList();
     }, []);
 
@@ -32,13 +43,15 @@ const Friend = () => {
 
     const friendCheckClick = () => {
         setCheckModal(true);
+        fetchCheckFriend();
     }
 
     const searchFrInput = (e) => {
         const inputVal = e.target.value;
         setFrInput(inputVal);
     }
-
+    
+    // 친구 리스트 불러오기 기능
     const fetchFriendList = async () => {
         const tokenToUse = sessionToken || localToken;
 
@@ -48,7 +61,6 @@ const Friend = () => {
                     'X-AUTH-TOKEN': tokenToUse, // 인증 헤더 추가
                     'Content-Type': 'application/json',
                 },
-
             })
             const json = await res.json();
             // console.log(json);
@@ -60,10 +72,31 @@ const Friend = () => {
                 console.error('응답 상태 코드:', res.status);
                 alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
             }
-
-
     }
 
+    // 친구요청 확인 기능
+    const fetchCheckFriend = async() => {
+        const tokenToUse = sessionToken || localToken;
+        const res = await fetch(FRIEND_CHECK_URL, {
+            method: 'GET',
+            headers: {
+                'X-AUTH-TOKEN': tokenToUse, // 인증 헤더 추가
+                'Content-Type': 'application/json',
+            },
+        })
+        const json = await res.json();
+        // console.log(json);
+        if (res.ok) {
+            console.log(json);
+            setFriendCheckList(json);
+
+        } else {
+            console.error('응답 상태 코드:', res.status);
+            alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+        }
+    }
+
+    // 친구 찾기 기능
     const searchFreind = async () => {
 
         const res = await fetch(`${FRIEND_SEARCH_URL}?seachParam=${frInput}`, {
@@ -162,16 +195,21 @@ const Friend = () => {
                         <div className="check-modal-header">
                             <p className="modal-title">친구 요청</p>
                         </div>
-                        {/*<div className="modal-friend-container">*/}
-                        {/*    <div className="fr-box">*/}
-                        {/*        <div className="fr-profile"></div>*/}
-                        {/*        <div className="fr-info">*/}
-                        {/*            <div className="fr-name">홍길동</div>*/}
-                        {/*            <div className="fr-des">안뇽</div>*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*    <button className="fr-send">add+</button>*/}
-                        {/*</div>*/}
+                        <ul>
+                            {displayFrCheckList.map((boards, index) => (
+                                <FriendList
+                                    key={index}
+                                    id={boards.id}
+                                    thumbnailUrl={boards.thumbnailUrl}
+                                    //     title={boards.title}
+                                    //     content={boards.content}
+                                    //     author={boards.author}
+                                    //     likeScore={boards.likeScore}
+                                    //     tag={boards.tag}
+                                    //     createdDate={boards.createdDate}
+                                />
+                            ))}
+                        </ul>
                     </div>
                 </div>
             }
