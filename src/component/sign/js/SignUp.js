@@ -80,6 +80,7 @@ const SignUp = () => {
         reader.readAsDataURL(file);
     };
 
+    // 이름 입력값을 검증하고 관리할 함수
     const nameHandler = (e) => {
         const inputVal = e.target.value;
 
@@ -119,9 +120,7 @@ const SignUp = () => {
         saveInputState(flag, msg, inputVal, 'email');
     };
 
-    // 이메일 중복체크
-    // 패스워드 입력값을 검증하고 관리할 함수
-
+    // 이메일 중복체크 기능
     const fetchDuplicatedCheck = async (email) => {
 
         let msg = '', flag = false;
@@ -148,6 +147,8 @@ const SignUp = () => {
         // setMessage({...message, email: msg});
         // setCorrect({...correct, email: flag});
     };
+
+    // 패스워드 입력값을 검증하고 관리할 함수
     const passwordHandler = e => {
 
         // 패스워드를 입력하면 확인란을 비우기
@@ -178,7 +179,7 @@ const SignUp = () => {
         saveInputState(flag, msg, inputVal, 'password');
     };
 
-    // 패스워드 확인란을 검증할 함수
+    // 패스워드 확인란을 검증할 기능
     const pwCheckHandler = e => {
 
         const inputVal = e.target.value;
@@ -202,7 +203,7 @@ const SignUp = () => {
 
 
 
-    // 생 입력값을 검증하고 관리할 함수
+    // 생일 입력값을 검증하고 관리할 기능
     const birthdayHandler = (e) => {
         let inputVal = e.target.value.replace(/[^0-9]/g, "").slice(0, 8); // 숫자만 + 최대 8자리
         if (inputVal.length >= 7) {
@@ -231,7 +232,7 @@ const SignUp = () => {
 
 
 
-    // 계정 생성 버튼을 누르면 동작할 내용
+    // 계정 생성 버튼을 누르면 확인란을 다시 검증
     const joinClickHandler = async (e) => {
         e.preventDefault();
 
@@ -250,7 +251,7 @@ const SignUp = () => {
 
 
 
-    // 회원가입 비동기요청을 서버로 보내는 함수
+    // 회원가입 form데이터를 서버로 보내는 기능
     const fetchSignUpPost = async () => {
         const formData = new FormData();
 
@@ -297,7 +298,7 @@ const SignUp = () => {
 
     };
 
-
+    // 카카오 회원가입버튼을 눌렀을때 동작할 기능
     const kakaoClickHandler = async () => {
 
         const res = await fetch(KAKAO_URL, {

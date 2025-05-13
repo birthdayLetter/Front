@@ -18,6 +18,8 @@ const FriendCheckList =  () => {
     //
     // }, [acceptFriend]);
 
+    // 나에게 들어온 친구요청 "수락" 기능
+    // 나에게 들어온 친구요청 "취소, 삭제" 기능이 없음!!!!!!
     const acceptFriend = async () => {
 
         const res = await fetch(FRIEND_APPLY_URL, {
@@ -27,8 +29,8 @@ const FriendCheckList =  () => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                // fromUserId:{fromUserId},
-                // toUserId:{toUserId}
+                // fromUserId:{fromUserId}, // 수락하는 나
+                // toUserId:{toUserId} // 나에게 요청보낸 친구
             })
         });
         if (res.ok) {

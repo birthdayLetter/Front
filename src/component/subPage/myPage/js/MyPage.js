@@ -7,6 +7,7 @@ import '../scss/MyPage.scss'
 const MyPage = () => {
     const localToken = localStorage.getItem('ACCESS_TOKEN');
     const sessionToken = sessionStorage.getItem('ACCESS_TOKEN');
+    const tokenToUse = sessionToken || localToken;
     const didAlert = useRef(false);
     const redirection = useNavigate();
     const imgRef = useRef();
@@ -20,6 +21,7 @@ const MyPage = () => {
         description: ''
     });
 
+    // 수정 버튼
     const [modifyBtn, setModifyBtn] = useState(true);
 
     useEffect(() => {
@@ -30,8 +32,8 @@ const MyPage = () => {
 
     }, []);
 
+    // 마이페이지 내 정보 데이터를 가져오는 기능
     const fetchUserInfo = async () => {
-        const tokenToUse = sessionToken || localToken;
 
         const res = await fetch(USER_URL + '/', {
             method: 'GET',
@@ -79,7 +81,7 @@ const MyPage = () => {
 
     }
 
-    // 정보 수정을 눌렀을때
+    // 정보 수정버튼을 눌렀을때 true false 값으로 input태그를 보여줌
     const modifyBtnHandler = () => {
         setModifyBtn(!modifyBtn);
     }
@@ -99,6 +101,8 @@ const MyPage = () => {
         };
         reader.readAsDataURL(file);
     };
+
+    // input의 값을 가져와 내정보를 대체하는 기능들
     const descriptionHandler = (e) => {
         const inputVal = e.target.value;
 
@@ -121,7 +125,6 @@ const MyPage = () => {
     }
     const passwordHandler = (e) => {
         const inputVal = e.target.value;
-
 
         setUserProfile({...userProfile, password: inputVal});
     }
@@ -151,6 +154,7 @@ const MyPage = () => {
     //     return new File([blob], filename, { type: mimeType });
     // };
 
+    // 정보수정 확인을 눌렀을때 백으로 form데이터로 보냄
     const modifyHandler = async () => {
         const tokenToUse = sessionToken || localToken;
         const formData = new FormData();

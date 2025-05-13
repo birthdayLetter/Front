@@ -11,6 +11,7 @@ const Friend = () => {
     const FRIEND_SEARCH_URL = FRIEND_URL + '/search';
     const FRIEND_LIST_URL = FRIEND_URL + '/list';
     const FRIEND_CHECK_URL = FRIEND_URL + '/list/pending';
+    const FRIEND_ADD_URL = FRIEND_URL + '/add'
     const localToken = localStorage.getItem('ACCESS_TOKEN');
     const sessionToken = sessionStorage.getItem('ACCESS_TOKEN');
     const tokenToUse = sessionToken || localToken;
@@ -54,6 +55,7 @@ const Friend = () => {
     }
     
     // 친구 리스트 불러오기 기능
+    // 친구 리스트 메인
     const fetchFriendList = async () => {
         //
         //     const res = await fetch(FRIEND_LIST_URL, {
@@ -75,7 +77,7 @@ const Friend = () => {
         //     }
     }
 
-    // 친구요청 확인 기능
+    // 나에게 들어온 친구요청 "확인" 기능
     const fetchCheckFriend = async() => {
         // const res = await fetch(FRIEND_CHECK_URL, {
         //     method: 'GET',
@@ -96,7 +98,7 @@ const Friend = () => {
         // }
     }
 
-    // 친구 찾기 기능
+    // 친구추가에서 친구 찾기 기능
     const searchFreind = async () => {
         //
         // const res = await fetch(`${FRIEND_SEARCH_URL}?seachParam=${frInput}`, {
@@ -109,12 +111,40 @@ const Friend = () => {
         // const json = await res.json();
         // // console.log(json);
         // if (res.ok) {
+        // 이때 내 userid, 친구 userid 아니면 친구userid만?
         //     console.log(json);
         //
         // } else {
         //     console.error('응답 상태 코드:', res.status);
         //     alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
         // }
+    }
+
+    // 친구추가 기능
+    // 친구 찾고 난뒤 add버튼을 눌렀을때
+    const addFriend = async() => {
+        const res = await fetch(FRIEND_ADD_URL, {
+            method: 'POST',
+            headers: {
+                'X-AUTH-TOKEN': tokenToUse,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                // fromUserId:{fromUserId}, // 나 (안됨 애초에 userId가 없음 토큰으로 해야함
+                // 아니면,,, 검색할때 내 userid를 받아오면,,,?)
+                // 친구요청하기전 검색했을때 친구userId를 받아야만 친구요청 가능
+                // toUserId:{toUserId} // 요청 보낼 친구
+            })
+        });
+        if (res.ok) {
+            const json = await res.json();
+            console.log(json);
+            // redirection('/friend');
+        } else {
+            console.error('응답 상태 코드:', res.status);
+            alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+        }
+
     }
 
     return (
@@ -178,7 +208,7 @@ const Friend = () => {
                                     <div className="fr-des">안뇽</div>
                                 </div>
                             </div>
-                            <button className="fr-send">add+</button>
+                            <button className="fr-send" onClick={addFriend}>add+</button>
                         </div>
                     </div>
                 </div>
