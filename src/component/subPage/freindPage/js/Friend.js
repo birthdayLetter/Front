@@ -5,6 +5,7 @@ import Header from "../../../header/js/Header.js";
 import FriendList from "../js/FriendList.js";
 import { HiSearch } from "react-icons/hi";
 import {BsPersonFillAdd, BsPersonFillCheck} from "react-icons/bs";
+import FriendCheckList from "./FriendCheckList.js";
 
 const Friend = () => {
     const FRIEND_SEARCH_URL = FRIEND_URL + '/search';
@@ -12,6 +13,7 @@ const Friend = () => {
     const FRIEND_CHECK_URL = FRIEND_URL + '/list/pending';
     const localToken = localStorage.getItem('ACCESS_TOKEN');
     const sessionToken = sessionStorage.getItem('ACCESS_TOKEN');
+    const tokenToUse = sessionToken || localToken;
     const didAlert = useRef(false);
     const [friendList, setFriendList] = useState([]);
     const [friendCheckList, setFriendCheckList] = useState([]);
@@ -53,68 +55,66 @@ const Friend = () => {
     
     // 친구 리스트 불러오기 기능
     const fetchFriendList = async () => {
-        const tokenToUse = sessionToken || localToken;
-
-            const res = await fetch(FRIEND_LIST_URL, {
-                method: 'GET',
-                headers: {
-                    'X-AUTH-TOKEN': tokenToUse, // 인증 헤더 추가
-                    'Content-Type': 'application/json',
-                },
-            })
-            const json = await res.json();
-            // console.log(json);
-            if (res.ok) {
-                console.log(json);
-                setFriendList(json);
-
-            } else {
-                console.error('응답 상태 코드:', res.status);
-                alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
-            }
+        //
+        //     const res = await fetch(FRIEND_LIST_URL, {
+        //         method: 'GET',
+        //         headers: {
+        //             'X-AUTH-TOKEN': tokenToUse, // 인증 헤더 추가
+        //             'Content-Type': 'application/json',
+        //         },
+        //     })
+        //     const json = await res.json();
+        //     // console.log(json);
+        //     if (res.ok) {
+        //         console.log(json);
+        //         setFriendList(json);
+        //
+        //     } else {
+        //         console.error('응답 상태 코드:'+ res.status);
+        //         alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+        //     }
     }
 
     // 친구요청 확인 기능
     const fetchCheckFriend = async() => {
-        const tokenToUse = sessionToken || localToken;
-        const res = await fetch(FRIEND_CHECK_URL, {
-            method: 'GET',
-            headers: {
-                'X-AUTH-TOKEN': tokenToUse, // 인증 헤더 추가
-                'Content-Type': 'application/json',
-            },
-        })
-        const json = await res.json();
-        // console.log(json);
-        if (res.ok) {
-            console.log(json);
-            setFriendCheckList(json);
-
-        } else {
-            console.error('응답 상태 코드:', res.status);
-            alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
-        }
+        // const res = await fetch(FRIEND_CHECK_URL, {
+        //     method: 'GET',
+        //     headers: {
+        //         'X-AUTH-TOKEN': tokenToUse, // 인증 헤더 추가
+        //         'Content-Type': 'application/json',
+        //     },
+        // })
+        // const json = await res.json();
+        // // console.log(json);
+        // if (res.ok) {
+        //     console.log(json);
+        //     setFriendCheckList(json);
+        //
+        // } else {
+        //     console.error('응답 상태 코드:', res.status);
+        //     alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+        // }
     }
 
     // 친구 찾기 기능
     const searchFreind = async () => {
-
-        const res = await fetch(`${FRIEND_SEARCH_URL}?seachParam=${frInput}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-
-        })
-        const json = await res.json();
-        // console.log(json);
-        if (res.ok) {
-            console.log(json);
-
-        } else {
-            console.error('응답 상태 코드:', res.status);
-            alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
-        }
+        //
+        // const res = await fetch(`${FRIEND_SEARCH_URL}?seachParam=${frInput}`, {
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //
+        // })
+        // const json = await res.json();
+        // // console.log(json);
+        // if (res.ok) {
+        //     console.log(json);
+        //
+        // } else {
+        //     console.error('응답 상태 코드:', res.status);
+        //     alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+        // }
     }
 
     return (
@@ -192,15 +192,16 @@ const Friend = () => {
                     }
                 }}>
                     <div className={'modal-content'}>
-                        <div className="check-modal-header">
+                        <div className="modal-fr-ck-container">
                             <p className="modal-title">친구 요청</p>
                         </div>
-                        <ul>
-                            {displayFrCheckList.map((boards, index) => (
-                                <FriendList
-                                    key={index}
-                                    id={boards.id}
-                                    thumbnailUrl={boards.thumbnailUrl}
+                        <ul className="fr-ck-container">
+                            {/*{displayFrCheckList.map((boards, index) => (*/}
+                                <FriendCheckList
+
+                                    // key={index}
+                                    // id={boards.id}
+                                    // thumbnailUrl={boards.thumbnailUrl}
                                     //     title={boards.title}
                                     //     content={boards.content}
                                     //     author={boards.author}
@@ -208,7 +209,7 @@ const Friend = () => {
                                     //     tag={boards.tag}
                                     //     createdDate={boards.createdDate}
                                 />
-                            ))}
+                            {/*))}*/}
                         </ul>
                     </div>
                 </div>
