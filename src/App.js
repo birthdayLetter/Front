@@ -9,6 +9,7 @@ import Friend from "./component/subPage/freindPage/js/Friend.js";
 import CheckPw from "./component/subPage/myPage/js/CheckPw.js";
 import MyPage from "./component/subPage/myPage/js/MyPage.js";
 import OauthCallback from "./component/sign/js/OauthCallback";
+import SendLetter from "./component/subPage/sendLetter/js/SendLetter.js";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/signup" element={<SignUp/>}/>
                 <Route path="/checkpw" element={<CheckPw/>}/>
                 <Route path="/mypage" element={<MyPage/>}/>
+                <Route path="/send" element={<SendLetter/>}/>
                 <Route path="/friend" element={<Friend/>}/>
                 <Route path="/oauth/callback" element={<OauthCallback/>}/>
             </Routes>

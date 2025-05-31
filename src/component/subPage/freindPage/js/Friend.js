@@ -57,45 +57,47 @@ const Friend = () => {
     // 친구 리스트 불러오기 기능
     // 친구 리스트 메인
     const fetchFriendList = async () => {
-        //
-        //     const res = await fetch(FRIEND_LIST_URL, {
-        //         method: 'GET',
-        //         headers: {
-        //             'X-AUTH-TOKEN': tokenToUse, // 인증 헤더 추가
-        //             'Content-Type': 'application/json',
-        //         },
-        //     })
-        //     const json = await res.json();
-        //     // console.log(json);
-        //     if (res.ok) {
-        //         console.log(json);
-        //         setFriendList(json);
-        //
-        //     } else {
-        //         console.error('응답 상태 코드:'+ res.status);
-        //         alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
-        //     }
+        const tokenToUse = sessionToken || localToken;
+
+            const res = await fetch(FRIEND_LIST_URL, {
+                method: 'GET',
+                headers: {
+                    'X-AUTH-TOKEN': tokenToUse, // 인증 헤더 추가
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+            })
+            const json = await res.json();
+            // console.log(json);
+            if (res.ok) {
+                console.log(json);
+                setFriendList(json);
+
+            } else {
+                console.error('응답 상태 코드:'+ res.status);
+                alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+            }
     }
 
     // 나에게 들어온 친구요청 "확인" 기능
     const fetchCheckFriend = async() => {
-        // const res = await fetch(FRIEND_CHECK_URL, {
-        //     method: 'GET',
-        //     headers: {
-        //         'X-AUTH-TOKEN': tokenToUse, // 인증 헤더 추가
-        //         'Content-Type': 'application/json',
-        //     },
-        // })
-        // const json = await res.json();
-        // // console.log(json);
-        // if (res.ok) {
-        //     console.log(json);
-        //     setFriendCheckList(json);
-        //
-        // } else {
-        //     console.error('응답 상태 코드:', res.status);
-        //     alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
-        // }
+        const res = await fetch(FRIEND_CHECK_URL, {
+            method: 'GET',
+            headers: {
+                'X-AUTH-TOKEN': tokenToUse, // 인증 헤더 추가
+                'Content-Type': 'application/json',
+            },
+        })
+        const json = await res.json();
+        // console.log(json);
+        if (res.ok) {
+            console.log(json);
+            setFriendCheckList(json);
+
+        } else {
+            console.error('응답 상태 코드:', res.status);
+            alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
+        }
     }
 
     // 친구추가에서 친구 찾기 기능
@@ -123,6 +125,7 @@ const Friend = () => {
     // 친구추가 기능
     // 친구 찾고 난뒤 add버튼을 눌렀을때
     const addFriend = async() => {
+        const tokenToUse = sessionToken || localToken;
         const res = await fetch(FRIEND_ADD_URL, {
             method: 'POST',
             headers: {

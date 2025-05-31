@@ -35,7 +35,7 @@ const Header = () => {
                         <Menu customBurgerIcon={<RxHamburgerMenu />} customCrossIcon={ <RxCross2 /> }>
                             <div className="menuBox">
                                 <Link to='/' id="home" className="menu-item">Home</Link>
-                                <Link to='/friend' id="freind" className="menu-item">Freind</Link>
+                                <Link to='/send' id="send" className="menu-item">Send</Link>
                                 {isLoggedIn ? (
                                     <>
                                         <Link to='/signin' id="signin" className="menu-item">Sign-in</Link>
