@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import {LETTER_URL} from "../../../../config/host-config.js";
 import Header from "../../../header/js/Header.js";
 import '../scss/SendLetter.scss'
@@ -11,6 +12,7 @@ const SendLetter = () => {
     const [content, setContent] = useState('');
     const [touser, setToUser] = useState('');
     const [fromuser, setFromUser] = useState('');
+    const redirection = useNavigate();
     // const [date, setDate] = useState();
 
     const touserHandler = (e) => {
@@ -52,7 +54,7 @@ const SendLetter = () => {
         if (res.ok) {
             const json = await res.json();
             console.log(json);
-            // redirection('/friend');
+            redirection('/main');
         } else {
             console.error('응답 상태 코드:', res.status);
             alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
@@ -64,8 +66,8 @@ const SendLetter = () => {
             <Header/>
             <div className="sendletter-container">
                 <div className="sendletter-box">
-                    <input type="text" placeholder="나의 아이디" className="to-user" onChange={touserHandler}/>
-                    <input type="text" placeholder="친구 아이디" className="from-user" onChange={fromuserHandler}/>
+                    <input type="text" placeholder="나의 아이디" className="from-user" onChange={fromuserHandler}/>
+                    <input type="text" placeholder="친구 아이디" className="to-user" onChange={touserHandler}/>
                     {/*<input type="text" placeholder="20250601" className="from-user" onChange={dateHandler}/>*/}
                     <input type="text" className="send-input" onChange={contentHandler}/>
                     <button className="send-letter-button" onClick={sendletterClick}>보내기</button>

@@ -5,6 +5,7 @@ import './App.css';
 import Main from "./component/main/js/Main.js";
 import SignIn from "./component/sign/js/SignIn.js";
 import SignUp from "./component/sign/js/SignUp.js";
+import LetterDetail from "./component/subPage/detailPage/js/LetterDetail.js";
 import Friend from "./component/subPage/freindPage/js/Friend.js";
 import CheckPw from "./component/subPage/myPage/js/CheckPw.js";
 import MyPage from "./component/subPage/myPage/js/MyPage.js";
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/send" element={<SendLetter/>}/>
                 <Route path="/friend" element={<Friend/>}/>
                 <Route path="/oauth/callback" element={<OauthCallback/>}/>
+                <Route path="/letter/:year" element={<LetterDetail />} />
             </Routes>
       </BrowserRouter>
   );

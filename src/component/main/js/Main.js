@@ -5,7 +5,6 @@ import Header from "../../header/js/Header.js";
 import LetterList from "../../subPage/detailPage/js/LetterList.js";
 
 
-
 const Main = () => {
     const MAIN_LETTER_URL = LETTER_URL + '/letter/main'
     const localToken = localStorage.getItem('ACCESS_TOKEN');
@@ -27,10 +26,10 @@ const Main = () => {
         if (tokenToUse) {
             setIsLoggedIn(true);
         }
-        fetchGetLetter();
+        fetchGetYear();
     }, []);
 
-    const fetchGetLetter = async () => {
+    const fetchGetYear = async () => {
 
         try {
 
@@ -46,6 +45,7 @@ const Main = () => {
                 const json = await res.json();
                 if (json) {
                     console.log(json);
+                    setMainList(json);
                 }
             }
         } catch (error) {
@@ -58,20 +58,12 @@ const Main = () => {
             <div className="main-container">
                 <div className="letter-container">
                     <ul className="letter-row">
-                        {/*{displayedLetterList.map((boards, index) => (*/}
-                        {/*    <Upcycle_content*/}
-                        {/*        key={index}*/}
-                        {/*        id={boards.id}*/}
-                        {/*        thumbnailUrl={boards.thumbnailUrl}*/}
-                        {/*        title={boards.title}*/}
-                        {/*        content={boards.content}*/}
-                        {/*        author={boards.author}*/}
-                        {/*        likeScore={boards.likeScore}*/}
-                        {/*        tag={boards.tag}*/}
-                        {/*        createdDate={boards.createdDate}*/}
-                        {/*    />*/}
-                        {/*))}*/}
-                        <LetterList />
+                        {displayedLetterList.map((item, index) => (
+                            <LetterList
+                                key={index}
+                                year={item}
+                            />
+                        ))}
                     </ul>
                 </div>
             </div>

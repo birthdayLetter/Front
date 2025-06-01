@@ -1,10 +1,12 @@
 import '../scss/LetterList.scss'
+import {Link} from "react-router-dom";
 
-const LetterList = () => {
+const LetterList = ({year}) => {
     return(
         <>
-            <div className="letter-box">
-                <p>2025</p>
+            <li className="letter-box">
+                <Link to={`/letter/${year}`} className="letter-link">
+                <p>{year}</p>
                 <div className="letter-design1">
 
                 </div>
@@ -19,75 +21,8 @@ const LetterList = () => {
 
                     </div>
                 </div>
-            </div>
-            <div className="letter-box">
-                <p>2024</p>
-                <div className="letter-design1">
-
-                </div>
-                <div className="letter-design-box">
-                    <div className="letter-design2">
-
-                    </div>
-                    <div className="letter-design2">
-
-                    </div>
-                    <div className="letter-design2">
-
-                    </div>
-                </div>
-            </div>
-            <div className="letter-box">
-                <p>2023</p>
-                <div className="letter-design1">
-
-                </div>
-                <div className="letter-design-box">
-                    <div className="letter-design2">
-
-                    </div>
-                    <div className="letter-design2">
-
-                    </div>
-                    <div className="letter-design2">
-
-                    </div>
-                </div>
-            </div>
-            <div className="letter-box">
-                <p>2025</p>
-                <div className="letter-design1">
-
-                </div>
-                <div className="letter-design-box">
-                    <div className="letter-design2">
-
-                    </div>
-                    <div className="letter-design2">
-
-                    </div>
-                    <div className="letter-design2">
-
-                    </div>
-                </div>
-            </div>
-            <div className="letter-box">
-                <p>2025</p>
-                <div className="letter-design1">
-
-                </div>
-                <div className="letter-design-box">
-                    <div className="letter-design2">
-
-                    </div>
-                    <div className="letter-design2">
-
-                    </div>
-                    <div className="letter-design2">
-
-                    </div>
-                </div>
-            </div>
+                </Link>
+            </li>
         </>
     )
 }
