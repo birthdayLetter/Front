@@ -21,7 +21,7 @@ const LetterList = () => {
                 </div>
             </div>
             <div className="letter-box">
-                <p>2025</p>
+                <p>2024</p>
                 <div className="letter-design1">
 
                 </div>
@@ -38,7 +38,7 @@ const LetterList = () => {
                 </div>
             </div>
             <div className="letter-box">
-                <p>2025</p>
+                <p>2023</p>
                 <div className="letter-design1">
 
                 </div>
