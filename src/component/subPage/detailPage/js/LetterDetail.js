@@ -1,7 +1,10 @@
+import '../scss/LetterDetail.scss'
 import {useEffect, useRef, useState} from "react";
 import {LETTER_URL} from "../../../../config/host-config.js";
 import Header from "../../../header/js/Header.js";
 import { useParams } from 'react-router-dom';
+import LetterDetailList from "./LetterDetailList.js";
+import LetterList from "./LetterList.js";
 
 
 const LetterDetail = () => {
@@ -13,6 +16,13 @@ const LetterDetail = () => {
     const tokenToUse = sessionToken || localToken;
     const didAlert = useRef(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [letter, setLetter] = useState([]);
+    const [page, setPage] = useState(1);
+    const itemsPerPage = 15;
+    const displayedLetterDetailList = letter.slice(
+        (page - 1) * itemsPerPage,
+        page * itemsPerPage
+    );
 
     useEffect(() => {
         if (didAlert.current) return; // 이미 알럿했으면 무시
@@ -39,7 +49,7 @@ const LetterDetail = () => {
                 const json = await res.json();
                 if (json) {
                     console.log(json);
-                    // setMainList(json);
+                    setLetter(json);
                 }
             }
         } catch (error) {
@@ -51,9 +61,19 @@ const LetterDetail = () => {
     return(
         <>
             <Header />
-            <ul className="yletter-contianer">
-
-            </ul>
+            <div className="yletter-container">
+                <ul className="yletter-box">
+                    {displayedLetterDetailList.map((item, index) => (
+                        <LetterDetailList
+                            key={index}
+                            content={item.content}
+                            fromUser={item.fromUser}
+                            toUser={item.toUser}
+                            date={item.date}
+                        />
+                    ))}
+                </ul>
+            </div>
         </>
         )
 }
