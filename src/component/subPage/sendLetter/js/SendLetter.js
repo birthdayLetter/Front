@@ -11,7 +11,7 @@ const SendLetter = () => {
     const tokenToUse = sessionToken || localToken;
     const [content, setContent] = useState('');
     const [touser, setToUser] = useState('');
-    const [fromuser, setFromUser] = useState('');
+    // const [fromuser, setFromUser] = useState('');
     const redirection = useNavigate();
     // const [date, setDate] = useState();
 
@@ -19,10 +19,10 @@ const SendLetter = () => {
         const inputVal = e.target.value;
         setToUser(inputVal);
     }
-    const fromuserHandler = (e) => {
-        const inputVal = e.target.value;
-        setFromUser(inputVal);
-    }
+    // const fromuserHandler = (e) => {
+    //     const inputVal = e.target.value;
+    //     setFromUser(inputVal);
+    // }
 
     // const dateHandler = (e) => {
     //     const inputVal = e.target.value;
@@ -45,7 +45,7 @@ const SendLetter = () => {
             },
             body: JSON.stringify({
                 toUser: `${touser}`,
-                fromUser:`${fromuser}`, // 나 (안됨 애초에 userId가 없음 토큰으로 해야함
+                // fromUser:`${fromuser}`, // 나 (안됨 애초에 userId가 없음 토큰으로 해야함
                 content:`${content}`,
                 // date:{date},
                 letterTemplateId:'1'
@@ -53,8 +53,8 @@ const SendLetter = () => {
         });
         if (res.ok) {
             const json = await res.json();
+            redirection('/friend');
             console.log(json);
-            redirection('/main');
         } else {
             console.error('응답 상태 코드:', res.status);
             alert('서버와의 통신이 원활하지 않습니다. 상태 코드: ' + res.status);
@@ -66,7 +66,7 @@ const SendLetter = () => {
             <Header/>
             <div className="sendletter-container">
                 <div className="sendletter-box">
-                    <input type="text" placeholder="나의 아이디" className="from-user" onChange={fromuserHandler}/>
+                    {/*<input type="text" placeholder="나의 아이디" className="from-user" onChange={fromuserHandler}/>*/}
                     <input type="text" placeholder="친구 아이디" className="to-user" onChange={touserHandler}/>
                     {/*<input type="text" placeholder="20250601" className="from-user" onChange={dateHandler}/>*/}
                     <input type="text" className="send-input" onChange={contentHandler}/>
